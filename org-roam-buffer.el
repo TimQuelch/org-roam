@@ -116,10 +116,12 @@ When non-nil, the window will not be closed when deleting other windows."
                         (insert-buffer-substring org-roam-buffer--current)
                         (org-roam--extract-ref)))
             (org-ref-p (require 'org-ref nil t)) ; Ensure that org-ref is present
-            (cite-prefixes (-map (lambda (type)
-                                   (concat type ":")) org-ref-cite-types))
+            (cite-prefix (seq-find
+                          (lambda (prefix) (s-prefix? prefix roam-key))
+                          (-map (lambda (type) (concat type ":"))
+                                org-ref-cite-types)))
             (key-backlinks (org-roam--get-backlinks
-                            (s-chop-prefixes cite-prefixes roam-key)))
+                            (s-chop-prefix cite-prefix roam-key)))
             (grouped-backlinks (--group-by (nth 0 it) key-backlinks)))
       (progn
         (insert (let ((l (length key-backlinks)))
