@@ -1716,7 +1716,7 @@ Return added alias."
     (when (string-empty-p alias)
       (user-error "Alias can't be empty"))
     (org-roam--set-global-prop
-     "ROAM_ALIAS"
+     "roam_alias"
      (combine-and-quote-strings
       (seq-uniq (cons alias
                       (org-roam--extract-titles-alias)))))
@@ -1731,7 +1731,7 @@ Return added alias."
   (if-let ((aliases (org-roam--extract-titles-alias)))
       (let ((alias (completing-read "Alias: " aliases nil 'require-match)))
         (org-roam--set-global-prop
-         "ROAM_ALIAS"
+         "roam_alias"
          (combine-and-quote-strings (delete alias aliases)))
         (org-roam-db--update-file (buffer-file-name (buffer-base-buffer))))
     (user-error "No aliases to delete")))
@@ -1749,7 +1749,7 @@ Return added tag."
     (when (string-empty-p tag)
       (user-error "Tag can't be empty"))
     (org-roam--set-global-prop
-     "ROAM_TAGS"
+     "roam_tags"
      (combine-and-quote-strings (seq-uniq (cons tag existing-tags))))
     (org-roam-db--insert-tags 'update)
     tag))
@@ -1762,7 +1762,7 @@ Return added tag."
             (tags (org-roam--extract-tags-prop file)))
       (let ((tag (completing-read "Tag: " tags nil 'require-match)))
         (org-roam--set-global-prop
-         "ROAM_TAGS"
+         "roam_tags"
          (combine-and-quote-strings (delete tag tags)))
         (org-roam-db--insert-tags 'update))
     (user-error "No tag to delete")))
