@@ -887,8 +887,8 @@ If the property is already set, it's value is replaced."
   (save-excursion
     (widen)
     (goto-char (point-min))
-    (if (re-search-forward (concat "^#\\+" name ": \\(.*\\)") (point-max) t)
-        (replace-match (concat "#+" name ": " value) 'fixedcase)
+    (if (re-search-forward (concat "^\\(#\\+" name ": \\)\\(.*\\)") (point-max) t)
+        (replace-match (concat "\\1" value) 'fixedcase)
       (while (and (not (eobp))
                   (looking-at "^[#:]"))
         (if (save-excursion (end-of-line) (eobp))
